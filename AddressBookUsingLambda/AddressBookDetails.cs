@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -564,6 +567,153 @@ namespace AddressbookusingLambda
                 Console.WriteLine("Address Book is Empty");
             }
 
+        }
+        public void ReadFromFile()
+        {
+            string filePath = @"C:\Users\mvsan\fellowship_program\day27\AddressBookUsingLambda\AddressBookUsingLambda\Details.txt";
+
+            try
+            {
+                string[] fileContents = File.ReadAllLines(filePath);
+                var currentAbName = fileContents[0];
+                contacts = new List<Person>();
+                foreach (string i in fileContents.Skip(1))
+                {
+                    if (i.Contains(","))
+                    {
+                        Person person = new Person();
+                        string[] line = i.Split(",");
+                        person.firstName = line[0];
+                        person.lastName = line[1];
+                        person.address = line[2];
+                        person.city = line[3];
+                        person.state = line[4];
+                        person.zipCode = Convert.ToInt32(line[5]);
+                        person.phoneNumber = line[6];
+                        person.email = line[7];
+                        contacts.Add(person);
+                    }
+                    else
+                    {
+                        addressBookDictionary.Add(currentAbName, contacts);
+                        currentAbName = i;
+                        contacts = new List<Person>();
+                    }
+
+
+                }
+                addressBookDictionary.Add(currentAbName, contacts);
+                Console.WriteLine("SuccessFully Added");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        public void WriteToFile()
+        {
+            string filePath = @"C:\Users\mvsan\fellowship_program\day27\AddressBookUsingLambda\AddressBookUsingLambda\Details.txt";
+
+            try
+            {
+                if (addressBookDictionary.Count > 0)
+                {
+                    File.WriteAllText(filePath, string.Empty);
+                    //printing the values in address book
+                    foreach (KeyValuePair<string, List<Person>> dict in addressBookDictionary)
+                    {
+                        File.AppendAllText(filePath, $"{dict.Key}\n");
+                        foreach (var addressBook in dict.Value)
+                        {
+                            string text = $"{addressBook.firstName},{addressBook.lastName},{addressBook.address},{addressBook.city},{addressBook.state},{addressBook.zipCode},{addressBook.phoneNumber},{addressBook.email}\n";
+                            File.AppendAllText(filePath, text);
+                        }
+                    }
+                    Console.WriteLine("successfully stored in file");
+                }
+                else
+                {
+                    Console.WriteLine("Address Book is Empty");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+        public void ReadFromCsvFile()
+        {
+            //File path
+            string filePath = @"C:\Users\mvsan\fellowship_program\day27\AddressBookUsingLambda\AddressBookUsingLambda\Details.txt";
+            try
+            {
+                string abName = "Ab-TN";
+                if (File.Exists(filePath))
+                {
+                    //Stream reader for reading from csv file
+                    using (var reader = new StreamReader(filePath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        //fetching records from csv files
+                        var csvContactsList = csv.GetRecords<Person>().ToList();
+                        addressBookDictionary.Add(abName, csvContactsList);
+                        Console.WriteLine("Successfully Added from file");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+        /// <summary>
+        /// Write records to csv file
+        /// </summary>
+        public void WriteToCsvFile()
+        {
+            //File path of csv file
+            string filePath = @"C:\Users\mvsan\fellowship_program\day27\AddressBookUsingLambda\AddressBookUsingLambda\Details.txt";
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    if (addressBookDictionary.Count > 0)
+                    {
+                        //initially clear the file
+                        File.WriteAllText(filePath, string.Empty);
+                        //stream writer to write files
+                        using (var writer = new StreamWriter(filePath))
+                        using (var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            foreach (KeyValuePair<string, List<Person>> dict in addressBookDictionary)
+                            {
+                                foreach (var addressBook in dict.Value)
+                                {
+                                    contacts = new List<Person>();
+                                    contacts.Add(addressBook);
+                                    //write records into csv file
+                                    csvWriter.WriteRecords(contacts);
+                                }
+                            }
+                        }
+                        Console.WriteLine("Records Written into csv file");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Address Book is Empty");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
         }
     }
 }
