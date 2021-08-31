@@ -10,6 +10,8 @@ namespace AddressbookusingLambda
         private static List<Person> searchContacts = new List<Person>();
         //address book dictioanry to store values
         private static Dictionary<string, List<Person>> addressBookDictionary = new Dictionary<string, List<Person>>();
+        private List<Person> viewContacts;
+
         public void AddMember()
         {
             string addressBookName;
@@ -182,32 +184,32 @@ namespace AddressbookusingLambda
                                 case 1:
                                     Console.WriteLine("Enter New First name");
                                     x.firstName = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter New Last name");
                                     x.lastName = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 3:
                                     Console.WriteLine("Enter New Address");
                                     x.address = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 4:
                                     Console.WriteLine("Enter New City");
                                     x.city = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 5:
                                     Console.WriteLine("Enter New State");
                                     x.state = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 6:
                                     Console.WriteLine("Enter New Zip Code");
                                     x.zipCode = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine("\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
                                     break;
                                 case 7:
                                     //validation for phone number
@@ -218,7 +220,7 @@ namespace AddressbookusingLambda
                                         if (phNo.Length == 10)
                                         {
                                             x.phoneNumber = phNo;
-                                            Console.WriteLine("\t\t\t\tMODIFIED");
+                                            Console.WriteLine("\t\t\t\t\tMODIFIED");
                                             break;
                                         }
                                         else
@@ -236,7 +238,7 @@ namespace AddressbookusingLambda
                                         if (emailId.Contains("@"))
                                         {
                                             x.email = emailId;
-                                            Console.WriteLine("\t\t\t\tMODIFIED");
+                                            Console.WriteLine("\t\t\t\t\tMODIFIED");
                                             break;
                                         }
                                         else
@@ -347,6 +349,81 @@ namespace AddressbookusingLambda
 
             }
 
+        }
+        public void ViewDetailsByStateOrCity()
+        {
+
+            Console.WriteLine("1. View by city name\n2.View By state name\nEnter your option:");
+            switch (Convert.ToInt32(Console.ReadLine()))
+            {
+                case 1:
+                    Console.WriteLine("Enter the name of city in which you want to view:");
+                    string cityName = Console.ReadLine();
+                    ViewByCityName(cityName);
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the state of city in which you want to view:");
+                    string stateName = Console.ReadLine();
+                    ViewByStateName(stateName);
+                    break;
+                default:
+                    return;
+
+            }
+
+        }
+
+        public void ViewByCityName(string cityName)
+        {
+            if (addressBookDictionary.Count > 0)
+            {
+
+                foreach (KeyValuePair<string, List<Person>> dict in addressBookDictionary)
+                {
+                    viewContacts = dict.Value.FindAll(x => x.state.Equals(cityName));
+                }
+                if (searchContacts.Count > 0)
+                {
+                    foreach (var x in searchContacts)
+                    {
+                        PrintValues(x);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No Persons found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Adress book is empty");
+            }
+        }
+        public void ViewByStateName(string stateName)
+        {
+            if (addressBookDictionary.Count > 0)
+            {
+
+                foreach (KeyValuePair<string, List<Person>> dict in addressBookDictionary)
+                {
+                    viewContacts = dict.Value.FindAll(x => x.state.Equals(stateName));
+                }
+                if (searchContacts.Count > 0)
+                {
+                    foreach (var x in searchContacts)
+                    {
+                        PrintValues(x);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No Persons found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Adress book is empty");
+            }
         }
 
         public void SearchByCityName(string cityName, string personName)
