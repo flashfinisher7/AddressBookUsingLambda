@@ -10,13 +10,11 @@ namespace AddressBookUsingLambda
             Console.WriteLine("\t\t\t\t\t This is a Address book using Lambda Problem");
             AddressBookDetails abd = new AddressBookDetails();
 
-            
-
             while (true)
             {
 
                 Console.WriteLine("*********************************************************");
-                Console.WriteLine("1.Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts list\n4.Delete members Contacts list\n5.Search for details\n6.View details of city or state\n7.Exit");
+                Console.WriteLine("1.Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts list\n4.Delete members Contacts list\n5.Search for details\n6.View details of city or state\n7.Count by city or state\n8.Exit");
                 Console.WriteLine("Enter an option:");
                 switch (Convert.ToInt32(Console.ReadLine()))
                 {
@@ -37,6 +35,9 @@ namespace AddressBookUsingLambda
                         break;
                     case 6:
                         abd.ViewDetailsByStateOrCity();
+                        break;
+                    case 7:
+                        abd.CountByStateOrCity();
                         break;
                     default:
                         // to exit from main method

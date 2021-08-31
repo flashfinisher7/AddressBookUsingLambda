@@ -184,32 +184,32 @@ namespace AddressbookusingLambda
                                 case 1:
                                     Console.WriteLine("Enter New First name");
                                     x.firstName = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter New Last name");
                                     x.lastName = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 3:
                                     Console.WriteLine("Enter New Address");
                                     x.address = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 4:
                                     Console.WriteLine("Enter New City");
                                     x.city = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 5:
                                     Console.WriteLine("Enter New State");
                                     x.state = Console.ReadLine();
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 6:
                                     Console.WriteLine("Enter New Zip Code");
                                     x.zipCode = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                    Console.WriteLine("\t\t\t\tMODIFIED");
                                     break;
                                 case 7:
                                     //validation for phone number
@@ -220,7 +220,7 @@ namespace AddressbookusingLambda
                                         if (phNo.Length == 10)
                                         {
                                             x.phoneNumber = phNo;
-                                            Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                            Console.WriteLine("\t\t\t\tMODIFIED");
                                             break;
                                         }
                                         else
@@ -238,7 +238,7 @@ namespace AddressbookusingLambda
                                         if (emailId.Contains("@"))
                                         {
                                             x.email = emailId;
-                                            Console.WriteLine("\t\t\t\t\tMODIFIED");
+                                            Console.WriteLine("\t\t\t\tMODIFIED");
                                             break;
                                         }
                                         else
@@ -359,12 +359,34 @@ namespace AddressbookusingLambda
                 case 1:
                     Console.WriteLine("Enter the name of city in which you want to view:");
                     string cityName = Console.ReadLine();
-                    ViewByCityName(cityName);
+                    ViewByCityName(cityName, "count");
                     break;
                 case 2:
                     Console.WriteLine("Enter the state of city in which you want to view:");
                     string stateName = Console.ReadLine();
-                    ViewByStateName(stateName);
+                    ViewByStateName(stateName, "count");
+                    break;
+                default:
+                    return;
+
+            }
+
+        }
+        public void CountByStateOrCity()
+        {
+
+            Console.WriteLine("1.Count by city name\n2.Count By state name\nEnter your option:");
+            switch (Convert.ToInt32(Console.ReadLine()))
+            {
+                case 1:
+                    Console.WriteLine("Enter the name of city in which you want to count persons:");
+                    string cityName = Console.ReadLine();
+                    ViewByCityName(cityName, "count");
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the name of state in which you want to count persons:");
+                    string stateName = Console.ReadLine();
+                    ViewByStateName(stateName, "count");
                     break;
                 default:
                     return;
@@ -373,7 +395,7 @@ namespace AddressbookusingLambda
 
         }
 
-        public void ViewByCityName(string cityName)
+        public void ViewByCityName(string cityName, string count)
         {
             if (addressBookDictionary.Count > 0)
             {
@@ -399,7 +421,7 @@ namespace AddressbookusingLambda
                 Console.WriteLine("Adress book is empty");
             }
         }
-        public void ViewByStateName(string stateName)
+        public void ViewByStateName(string stateName, string count)
         {
             if (addressBookDictionary.Count > 0)
             {
