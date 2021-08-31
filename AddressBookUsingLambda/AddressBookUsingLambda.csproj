@@ -5,4 +5,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Details.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Details.txt" />
+  </ItemGroup>
+
 </Project>

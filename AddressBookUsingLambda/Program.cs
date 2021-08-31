@@ -14,7 +14,7 @@ namespace AddressBookUsingLambda
             {
 
                 Console.WriteLine("*********************************************************");
-                Console.WriteLine("1.Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts list\n4.Delete members Contacts list\n5.Search for details\n6.View details of city or state\n7.Count by city or state\n8.Sort the list\n9.Exit");
+                Console.WriteLine("1.Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts list\n4.Delete members Contacts list\n5.Search for details\n6.View details of city or state\n7.Count by city or state\n8.Sort the list\n9.Read list from file\n10.write list from file\n11.Exit");
                 Console.WriteLine("Enter an option:");
                 switch (Convert.ToInt32(Console.ReadLine()))
                 {
@@ -41,6 +41,12 @@ namespace AddressBookUsingLambda
                         break;
                     case 8:
                         abd.SortEntries();
+                        break;
+                    case 9:
+                        abd.ReadFromFile();
+                        break;
+                    case 10:
+                        abd.WriteToFile();
                         break;
                     default:
                         // to exit from main method
